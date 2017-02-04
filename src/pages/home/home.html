@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle start>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="home-centered">
+    <h3>{{notebook.settings.name}}</h3>
+    <h3>Enjoy your Workout!</h3>  
+
+    <p>This will be workout session # {{notebook.workouts.length + 1}}.</p>
+    <!--
+      <p *ngIf="lastWorkoutDate">Your last workout session was on {{lastWorkoutDate}}.</p>  
+    -->
+
+    <button ion-button primary (click)="startWorkout()">Start Workout</button>
+  </div>
+
+</ion-content>

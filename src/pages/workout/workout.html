@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle start>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Workout</ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="addExercise()">
+          <ion-icon name="add"></ion-icon>
+        </button>      
+        <button ion-button icon-only (click)="finishWorkout()">
+          <ion-icon name="checkmark"></ion-icon>
+        </button>        
+    </ion-buttons>   
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div padding>
+  <ion-segment [(ngModel)]="workoutFilter" (ionChange)="getFilteredExercises()">
+    <ion-segment-button value="pending">
+      To Do
+    </ion-segment-button>    
+    <ion-segment-button value="done">
+      Done
+    </ion-segment-button>  
+    <ion-segment-button value="skipped">
+      Skipped
+    </ion-segment-button>       
+    <ion-segment-button value="all">
+      All
+    </ion-segment-button>     
+  </ion-segment>
+  </div>
+  <ion-list>
+    <ion-item-sliding *ngFor="let exercise of getFilteredExercises()">
+      <ion-item (click)="exerciseTapped($event, exercise)" [class.skipped-exercise]="exercise.skipped" >
+          <ion-checkbox item-left [(ngModel)]="exercise.done"></ion-checkbox>        
+          <ion-label>{{exercise.activityName}}</ion-label>
+          <!--
+            <ion-note item-right>
+              {{exercise.note}}
+            </ion-note>
+          -->
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="light" (click)="markSkipped(exercise)">Skip</button>
+        <button ion-button color="default" (click)="markDone(exercise)">Done</button>        
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

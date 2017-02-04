@@ -1,0 +1,43 @@
+<ion-menu [content]="content">
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Set 2</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+
+    <ion-list>
+      <ion-list-header>
+        Activity
+      </ion-list-header>      
+      <button menuClose ion-item *ngFor="let p of workoutPages" (click)="openPage(p)">
+        <ion-icon item-left name="{{p.icon}}"></ion-icon> {{p.title}}
+      </button>
+    </ion-list>
+
+    <ion-list>
+      <ion-list-header>
+        Sync
+      </ion-list-header>      
+      <button menuClose ion-item *ngFor="let p of adminPages" (click)="openPage(p)">
+        <ion-icon item-left name="{{p.icon}}"></ion-icon> {{p.title}}
+      </button>
+    </ion-list>   
+
+    <ion-list>    
+      <ion-list-header>
+        Info
+      </ion-list-header>       
+      <button menuClose ion-item *ngFor="let p of infoPages" (click)="openPage(p)">
+        <ion-icon item-left name="{{p.icon}}"></ion-icon> {{p.title}}
+      </button>
+    </ion-list>      
+
+  </ion-content>
+
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

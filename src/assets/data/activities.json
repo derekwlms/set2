@@ -1,0 +1,19 @@
+{
+    "activities": [
+        { "name": "Abdominal (Ab) Crunch", "image": "abdominal.jpg", "fitlinxxId": "", "settings": [] },        
+        { "name": "Back Extension", "image": "back-extension.jpg", "fitlinxxId": "", "settings": [] },          
+        { "name": "Bicep Curl", "image": "arm-curl.jpg", "fitlinxxId": "10806", "settings": [] },
+        { "name": "Calf Press", "image": "calf-press.jpg", "fitlinxxId": "", "settings": [ "Leg" ] },
+        { "name": "Chest Press", "image": "chest-press.jpg", "fitlinxxId": "10787", "settings": [ "Back", "Seat" ] }, 
+        { "name": "Hip Abduction", "image": "hip-ab-adj.jpg", "fitlinxxId": "", "settings": [] },
+        { "name": "Hip Adduction", "image": "hip-ab-adj.jpg", "fitlinxxId": "", "settings": [] }, 
+        { "name": "Lateral Raise", "image": "lateral-raise.png", "fitlinxxId": "", "settings": [ "Seat" ] },  
+        { "name": "Leg Curl", "image": "leg-curl.jpg", "fitlinxxId": "10815", "settings": [] },
+        { "name": "Leg Extension", "image": "leg-extension.jpg", "fitlinxxId": "10811", "settings": [] },
+        { "name": "Leg Press", "image": "leg-press.jpg", "fitlinxxId": "10814", "settings": [ "Back", "Leg"] },
+        { "name": "Seated Row", "image": "seated-row.jpg", "fitlinxxId": "10794", "settings": [ "Chest", "Seat" ] },      
+        { "name": "Shoulder (Overhead) Press", "image": "overhead-press.jpg", "fitlinxxId": "10801", "settings": [ "Seat" ] },     
+        { "name": "Tricep Dip", "image": "tricep-press.png", "fitlinxxId": "10803", "settings": [ "Seat" ] },  
+        { "name": "Wide Grip / Lat Pulldown", "image": "lat-pulldown.png", "fitlinxxId": "10791", "settings": [ "Knee" ] }
+    ]
+}

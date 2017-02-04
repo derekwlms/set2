@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle start>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Settings</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <form>
+
+      <ion-list>
+        <ion-list-header>
+          General
+        </ion-list-header>   
+        <ion-item>
+          <ion-label>Name</ion-label>
+          <ion-input type="text" [(ngModel)]="settings.name" name="name"></ion-input>
+        </ion-item>                
+      </ion-list>      
+
+      <ion-list>
+        <ion-list-header>
+          FitLinxx
+        </ion-list-header>   
+        <ion-item>
+          <ion-label>User ID</ion-label>
+          <ion-input type="text" [(ngModel)]="settings.fitLinxxUserId" name="fitLinxxUserId"></ion-input>
+        </ion-item>   
+        <ion-item>
+          <ion-label>Password</ion-label>
+          <ion-input type="password" [(ngModel)]="settings.fitLinxxPassword" name="fitLinxxPassword"></ion-input>
+        </ion-item>              
+      </ion-list>
+
+
+      <ion-list>
+        <ion-list-header>
+          Email
+        </ion-list-header>   
+        <ion-item>
+          <ion-label>Address</ion-label>
+          <ion-input type="text" [(ngModel)]="settings.emailAddress" name="emailAddress"></ion-input>
+        </ion-item>   
+        <ion-item>
+          <ion-label>API Key</ion-label>
+          <ion-input type="text" [(ngModel)]="settings.emailApiKey" name="emailApiKey"></ion-input>
+        </ion-item>     
+        <ion-item>
+          <ion-label>Domain</ion-label>
+          <ion-input type="text" [(ngModel)]="settings.emailDomain" name="emailDomain"></ion-input>
+        </ion-item>                     
+      </ion-list>
+
+    </form>
+
+    <hr />
+
+    <button ion-button primary (click)="clearStorage()">Clear Storage</button>    
+
+</ion-content>

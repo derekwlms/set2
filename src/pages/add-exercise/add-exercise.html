@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Add Exercise</ion-title>   
+    <ion-buttons end>
+      <button ion-button (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>    
+  </ion-navbar>  
+</ion-header>
+
+<ion-content padding>
+
+   <div>
+     <ion-list>
+       <button ion-item *ngFor="let activity of activities" (click)="selectActivity(activity)">
+         <ion-avatar item-left>
+           <img [src]="'assets/images/' + activity.image">
+         </ion-avatar>
+         {{activity.name}}
+       </button>
+     </ion-list>    
+   </div>     
+
+</ion-content>

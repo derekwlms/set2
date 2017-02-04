@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle start>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Upload</ion-title>   
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div padding>
+  <ion-segment [(ngModel)]="messageTypeFilter" (ionChange)="updateSelectedMessages()">
+    <ion-segment-button value="summary">
+      Summary
+    </ion-segment-button>    
+    <ion-segment-button value="fitlinxx">
+      FitLinxx
+    </ion-segment-button>  
+    <ion-segment-button value="fitbit">
+      Fitbit
+    </ion-segment-button>       
+    <ion-segment-button value="email">
+      Email
+    </ion-segment-button>     
+  </ion-segment>
+  </div>
+  <ion-list>
+    <ion-item text-wrap *ngFor="let message of selectedMessages">    
+      {{message}}
+    </ion-item>
+  </ion-list>
+</ion-content>

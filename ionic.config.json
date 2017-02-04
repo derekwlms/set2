@@ -1,0 +1,16 @@
+{
+  "name": "set2",
+  "app_id": "9580af3c",
+  "v2": true,
+  "typescript": true,
+  "proxies": [
+    {
+      "path": "/flxpro",
+      "proxyUrl": "https://flxpro.fitlinxx.com"
+    },
+    {
+      "path": "/fitlinxx",
+      "proxyUrl": "https://www.fitlinxx.com"
+    }    
+  ]
+}

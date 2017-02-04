@@ -1,0 +1,48 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Exercise</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+    <div *ngIf="exercise">
+      <h2>{{exercise.activityName}}</h2>
+      <img pull-right class="activity-image" [src]="'assets/images/' + exercise.image">
+      <ion-list>
+
+        <ion-list-header>
+          Sets
+          <button ion-button item-right icon-only clear (click)="addSet(exercise)">
+            <ion-icon name="add"></ion-icon>
+          </button>           
+        </ion-list-header>
+        <ion-item *ngFor="let set of exercise.sets">
+            <ion-checkbox item-left [(ngModel)]="set.done"></ion-checkbox>        
+            <ion-input type="text" [(ngModel)]="set.weight"></ion-input> / 
+            <ion-input type="text" [(ngModel)]="set.reps"></ion-input>            
+        </ion-item>
+
+        <ion-list-header>
+          Settings
+          <button ion-button item-right icon-only clear (click)="addSetting(exercise)">
+            <ion-icon name="add"></ion-icon>
+          </button>           
+        </ion-list-header> 
+        <ion-item *ngFor="let setting of exercise.settings">    
+            <ion-input type="text" [(ngModel)]="setting.name"></ion-input>:
+            <ion-input type="text" [(ngModel)]="setting.value"></ion-input>  
+        </ion-item>           
+
+      </ion-list>
+      <p>
+        {{exercise.note}}
+      </p>
+    </div>  
+    <button ion-button primary (click)="markDone(exercise)">Done</button>  
+    <button ion-button secondary (click)="markSkipped(exercise)">Skip</button>   
+    <button ion-button secondary (click)="cancel()">Cancel</button>           
+
+</ion-content>

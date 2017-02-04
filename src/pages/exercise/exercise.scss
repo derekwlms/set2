@@ -1,0 +1,14 @@
+page-exercise {
+    // Narrow the checkbox's width / click target
+    ion-checkbox {
+        button.item-cover {
+            left: initial;
+            right: 0;
+            width: 15%;
+        }
+    }
+
+    .activity-image {
+        height: 75px;
+    }
+}
