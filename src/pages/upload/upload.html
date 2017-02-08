@@ -30,3 +30,29 @@
     </ion-item>
   </ion-list>
 </ion-content>
+
+<div class="hide">
+  <div id="formattedWorkout" #formattedWorkout>
+    <h2>Set 2 Workout</h2>
+    <h3>Workout completed on {{workoutCompleteDate | date:yMMMMEEEEdjm}}</h3>      
+
+    <h4>Completed Exercises:</h4>    
+    <ul>
+      <ng-container *ngFor="let exercise of workout.exercises">    
+        <li *ngIf="exercise.done">
+          {{exercise.activityName}}
+        </li>
+      </ng-container>
+    </ul>
+
+    <h4>Skipped Exercises:</h4>    
+    <ul>
+      <ng-container *ngFor="let exercise of workout.exercises">    
+        <li *ngIf="exercise.skipped || !exercise.done">
+          {{exercise.activityName}}
+        </li>
+      </ng-container>
+    </ul>    
+
+  </div>
+</div>

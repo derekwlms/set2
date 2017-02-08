@@ -14,6 +14,8 @@ export class EmailSendService {
 
   private MAILGUN_BASE_URL = 'https://api.mailgun.net/v3/'; 
 
+  public emailBody: string;
+
   constructor(public http: Http,
               public uploadLoggingService: UploadLoggingService) {
   }
@@ -27,24 +29,22 @@ export class EmailSendService {
     let mailgunApiKey: string = btoa(settings.emailApiKey);
     requestHeaders.append('Authorization', 'Basic ' + mailgunApiKey);
     requestHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
-    this.http.request(new Request({
+    let requestParms = {
         method: RequestMethod.Post,
         url: this.MAILGUN_BASE_URL + settings.emailDomain + '/messages',
         body: 'from=' + settings.emailAddress + '&to=' + settings.emailAddress + 
-                '&subject=' + 'Set 2 Workout' + '&text=' + this.formatEmail(workout),
+                '&subject=' + 'Set 2 Workout' + '&text=' + 'Please view this email in HTML' + 
+                '&html=' + this.emailBody,
         headers: requestHeaders
-    }))
+    };
+    this.logMessage('Sending email...', null); // JSON.stringify(requestParms));
+    this.http.request(new Request(requestParms))
     .subscribe(success => {
-        this.logMessage('Email sent', JSON.stringify(success));
+        this.logMessage('Email sent.', null); // JSON.stringify(success));
     }, error => {
-        console.log('Email send error', JSON.stringify(error));
+        this.logMessage('Email send error', JSON.stringify(error));
+        // this.logMessage('Email send error details', JSON.stringify(error.json()));              
     });
-  }
-
-  private formatEmail(workout: Workout): string {
-    // TODO Stub. Do real HTML formatting
-    return 'Workout completed on ' + new Date(workout.completedMsecs) +
-            ', ' + workout.exercises.length + ' exercises';
   }
 
   private logMessage(message: string, arg: any) {
