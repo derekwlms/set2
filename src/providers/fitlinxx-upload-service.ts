@@ -32,7 +32,7 @@ export class FitLinxxUploadService {
       let body = new URLSearchParams();
       self.setWorkoutParameters(body, settings, workout);      
       for (let exercise of workout.exercises) {
-        if (exercise.done) {
+        if (exercise.done && !exercise.skipped) {
           self.addExerciseParameters(body, exercise);
         }
       }
@@ -72,18 +72,23 @@ export class FitLinxxUploadService {
                         body.toString(), { headers: headers, withCredentials: true })
           .subscribe(res => {
             this.logMessage('FitLinxx login response: ', res);
-            // Parse Location: and do the redirect
+            // Parse Location.  If present, do the redirect
             let loginResponse: string = res.text();
             let loginResponseSplit = loginResponse.split('Location:(.*$)');
             let redirectLocation = loginResponseSplit[1];
-            this.logMessage('Redirecting after login', redirectLocation);         
-            this.http.get(redirectLocation, { withCredentials: true })
-              .subscribe(res => {
-                this.logMessage('Redirect after login complete', res);               
-                nextStep();
-              }, err => {
-                this.logMessage('Error redirecting after login', err);
-              });
+            if (redirectLocation) {
+              this.logMessage('Redirecting after login', redirectLocation);         
+              this.http.get(redirectLocation, { withCredentials: true })
+                .subscribe(res => {
+                  this.logMessage('Redirect after login complete', res);               
+                  nextStep();
+                }, err => {
+                  this.logMessage('Error redirecting after login', err);              
+                });
+            } else {
+              this.logMessage('No redirect after login, proceeding', null);
+              nextStep();              
+            }
           }, err => {
             this.logMessage('Error posting Fitlinxx login', err);
           });
@@ -117,7 +122,7 @@ export class FitLinxxUploadService {
     params.set('wmonth', '' + workoutDate.getMonth());
     params.set('cardiotype', '');
     params.set('cardioinitialize', 'true');
-    params.set('bodyweight', '175'); // TODO settings.bodyWeight;
+    params.set('bodyweight', '' + (settings.bodyWeight || 175));
   }  
 
   private addExerciseParameters(params: URLSearchParams, exercise: Exercise) : void {

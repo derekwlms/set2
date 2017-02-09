@@ -10,8 +10,12 @@ export class Settings {
     public fitLinxxUserId: string;
     public name: string;
 
+    // Only for FitLinxx:
+    public bodyWeight: number;    
+
     static fromJson(json: any) : Settings {
         let settings = new Settings();
+        settings.bodyWeight = json.bodyWeight;
         settings.emailAddress = json.emailAddress;
         settings.emailApiKey = json.emailApiKey;
         settings.emailDomain = json.emailDomain;

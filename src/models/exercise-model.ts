@@ -39,6 +39,10 @@ export class Exercise {
         this.addSet(ExerciseSet.strengthSet(weight, reps));
     }
 
+    getExerciseSet(index: number) : ExerciseSet {
+        return this.sets[index] ? this.sets[index] :  ExerciseSet.strengthSet(0, 0);
+    }
+
     addSetting(setting: ExerciseSetting) {
         this.settings.push(setting);
     }   

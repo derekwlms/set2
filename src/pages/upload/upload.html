@@ -34,16 +34,37 @@
 <div class="hide">
   <div id="formattedWorkout" #formattedWorkout>
     <h2>Set 2 Workout</h2>
-    <h3>Workout completed on {{workoutCompleteDate | date:yMMMMEEEEdjm}}</h3>      
+    <h3>Workout completed on {{workoutCompleteDate | date:'EEE, MMM d, y, h:mm a'}}</h3>      
 
     <h4>Completed Exercises:</h4>    
-    <ul>
-      <ng-container *ngFor="let exercise of workout.exercises">    
-        <li *ngIf="exercise.done">
-          {{exercise.activityName}}
-        </li>
-      </ng-container>
-    </ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <th align="left">Exercise</th>
+        <th align="center" colspan="2">Set 1</th>
+        <th align="center" colspan="2">Set 2</th>  
+        <th align="center" colspan="2">Set 3</th>               
+      </tr>
+      <tr>
+        <th></th>
+        <th align="center">Weight</th>
+        <th align="center">Reps</th>      
+        <th align="center">Weight</th>
+        <th align="center">Reps</th>   
+        <th align="center">Weight</th>
+        <th align="center">Reps</th>                             
+      </tr>   
+      <ng-container *ngFor="let exercise of workout.exercises">             
+        <tr *ngIf="exercise.done && !exercise.skipped">    
+          <td align="left">{{exercise.activityName}}</td>
+          <td align="center">{{exercise.getExerciseSet(0).weight || ''}}</td>  
+          <td align="center">{{exercise.getExerciseSet(0).reps || ''}}</td>  
+          <td align="center">{{exercise.getExerciseSet(1).weight || ''}}</td>  
+          <td align="center">{{exercise.getExerciseSet(1).reps || ''}}</td>                  
+          <td align="center">{{exercise.getExerciseSet(2).weight || ''}}</td>  
+          <td align="center">{{exercise.getExerciseSet(2).reps || ''}}</td>                            
+        </tr>
+      </ng-container>      
+    </table>
 
     <h4>Skipped Exercises:</h4>    
     <ul>

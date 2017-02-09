@@ -76,6 +76,7 @@ export class WorkoutService {
     this.currentWorkout.startedMsecs = this.getCurrentMillisecs();
     for (let exercise of this.currentWorkout.exercises) {
         exercise.done = false;
+        exercise.skipped = false;
     }    
   }
 

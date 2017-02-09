@@ -28,12 +28,10 @@ To enable console logging, comment out the *enableProdMode* call in main.ts.
 
 ## To Do
 
-- Fix FitLinxx sync
-- Format email
 - Home page - list of workouts - history tab
 - Delete Exercise
 - Other activity types & their settings - cardio, etc
-- TODO flags
+- Activity default settings
 - Fitbit sync
 - Online save - Firebase?
 - Import - Fitlinx scrape?  jsonschema?
