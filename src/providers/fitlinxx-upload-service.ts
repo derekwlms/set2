@@ -103,7 +103,7 @@ export class FitLinxxUploadService {
 
 
   private sendWorkout(body: URLSearchParams) : void {
-    this.http.post(this.FITLINXX_WORKOUT_URL + '/workout/LogStrength.asp', // ?WebOnlyMember=False
+    this.http.post(this.FITLINXX_WORKOUT_URL + '/workout/LogStrength.asp?WebOnlyMember=False',
                         body.toString(), { withCredentials: true })
       .subscribe(exerciseResponse => {
         this.logMessage('Workout posted to Fitlinxx', exerciseResponse);        
@@ -130,6 +130,7 @@ export class FitLinxxUploadService {
         params.set('exer' + exercise.fitlinxxId, 'on');
         for (let i=0; i < exercise.sets.length; i++) {
           let exerciseSet: ExerciseSet = exercise.sets[i];
+          params.set('exer' + exercise.fitlinxxId, 'on');          
           params.set('set' + i+1 + 'w_' + exercise.fitlinxxId, '' + exerciseSet.weight);
           params.set('set' + i+1 + 'r_' + exercise.fitlinxxId, '' + exerciseSet.reps);          
         }

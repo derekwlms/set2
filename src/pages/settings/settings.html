@@ -19,22 +19,7 @@
           <ion-label>Name</ion-label>
           <ion-input type="text" [(ngModel)]="settings.name" name="name"></ion-input>
         </ion-item>                
-      </ion-list>      
-
-      <ion-list>
-        <ion-list-header>
-          FitLinxx
-        </ion-list-header>   
-        <ion-item>
-          <ion-label>User ID</ion-label>
-          <ion-input type="text" [(ngModel)]="settings.fitLinxxUserId" name="fitLinxxUserId"></ion-input>
-        </ion-item>   
-        <ion-item>
-          <ion-label>Password</ion-label>
-          <ion-input type="password" [(ngModel)]="settings.fitLinxxPassword" name="fitLinxxPassword"></ion-input>
-        </ion-item>              
-      </ion-list>
-
+      </ion-list>    
 
       <ion-list>
         <ion-list-header>
@@ -53,6 +38,34 @@
           <ion-input type="text" [(ngModel)]="settings.emailDomain" name="emailDomain"></ion-input>
         </ion-item>                     
       </ion-list>
+
+      <ion-list>
+        <ion-list-header>
+          Fitbit
+        </ion-list-header>   
+        <ion-item>
+          <ion-label>Client ID</ion-label>
+          <ion-input type="text" [(ngModel)]="settings.auth0clientId" name="auth0clientId"></ion-input>
+        </ion-item>   
+        <ion-item>
+          <ion-label>Domain</ion-label>
+          <ion-input type="text" [(ngModel)]="settings.auth0domain" name="auth0domain"></ion-input>
+        </ion-item>              
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>
+          FitLinxx
+        </ion-list-header>   
+        <ion-item>
+          <ion-label>User ID</ion-label>
+          <ion-input type="text" [(ngModel)]="settings.fitLinxxUserId" name="fitLinxxUserId"></ion-input>
+        </ion-item>   
+        <ion-item>
+          <ion-label>Password</ion-label>
+          <ion-input type="password" [(ngModel)]="settings.fitLinxxPassword" name="fitLinxxPassword"></ion-input>
+        </ion-item>              
+      </ion-list>      
 
     </form>
 

@@ -3,6 +3,8 @@
         "name": "Derek Williams",
         "lastUpdated": "1486000000000",
         "settings": {
+            "auth0clientId": "",
+            "auth0domain": "paymenthorizons.auth0.com",
             "emailAddress": "derekwlms@gmail.com",
             "emailApiKey": "",
             "emailDomain:": "paymenthorizons.com",

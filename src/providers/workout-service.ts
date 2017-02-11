@@ -77,7 +77,8 @@ export class WorkoutService {
     for (let exercise of this.currentWorkout.exercises) {
         exercise.done = false;
         exercise.skipped = false;
-    }    
+    }   
+    this.workoutUploadService.prepareNewWorkout();
   }
 
   private saveNotebook() {

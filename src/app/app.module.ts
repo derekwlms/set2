@@ -1,10 +1,14 @@
 import { NgModule, ErrorHandler } from '@angular/core';
+import { Http } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { MyApp } from './app.component';
 
+import { AuthConfig, AuthHttp } from 'angular2-jwt';
+
 import { ActivityService } from '../providers/activity-service';
 import { EmailSendService } from '../providers/email-send-service';
+import { FitbitUploadService } from '../providers/fitbit-upload-service';
 import { FitLinxxUploadService } from '../providers/fitlinxx-upload-service';
 import { UploadLoggingService } from '../providers/upload-logging-service';
 import { WorkoutRetrievalService } from '../providers/workout-retrieval-service';
@@ -18,6 +22,15 @@ import { HomePage } from '../pages/home/home';
 import { SettingsPage } from '../pages/settings/settings';
 import { UploadPage } from '../pages/upload/upload';
 import { WorkoutPage } from '../pages/workout/workout';
+
+let jwtStorage: Storage = new Storage();
+
+export function getAuthHttp(http) {
+  return new AuthHttp(new AuthConfig({
+    globalHeaders: [{'Accept': 'application/json'}],
+    tokenGetter: (() => jwtStorage.get('id_token'))
+  }), http);
+}
 
 @NgModule({
   declarations: [
@@ -44,10 +57,12 @@ import { WorkoutPage } from '../pages/workout/workout';
     UploadPage,    
     WorkoutPage
   ],
-  providers: [
+  providers: [  
     ActivityService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: AuthHttp, useFactory: getAuthHttp, deps: [Http] },
     EmailSendService,
+    { provide: ErrorHandler, useClass: IonicErrorHandler },      
+    FitbitUploadService,    
     FitLinxxUploadService,    
     Storage,
     UploadLoggingService,
