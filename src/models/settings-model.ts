@@ -3,11 +3,13 @@
 */
 export class Settings {
 
-    public auth0clientId: string;
-    public auth0domain: string;
     public emailAddress: string;
     public emailApiKey: string;
     public emailDomain: string;
+    public fitbitAuthorizationCode: string;  
+    public fitbitClientId: string;    
+    public fitbitClientSecret: string;    
+    public fitbitRedirectUri: string;       
     public fitLinxxPassword: string;
     public fitLinxxUserId: string;
     public name: string;
@@ -17,12 +19,14 @@ export class Settings {
 
     static fromJson(json: any) : Settings {
         let settings = new Settings();
-        settings.auth0clientId = json.auth0clientId;
-        settings.auth0domain = json.auth0domain;
         settings.bodyWeight = json.bodyWeight;
         settings.emailAddress = json.emailAddress;
         settings.emailApiKey = json.emailApiKey;
         settings.emailDomain = json.emailDomain;
+        settings.fitbitAuthorizationCode = json.fitbitAuthorizationCode; 
+        settings.fitbitClientId = json.fitbitClientId;        
+        settings.fitbitClientSecret = json.fitbitClientSecret;  
+        settings.fitbitRedirectUri = json.fitbitRedirectUri;                        
         settings.fitLinxxPassword = json.fitLinxxPassword;        
         settings.fitLinxxUserId = json.fitLinxxUserId;
         settings.name = json.name;

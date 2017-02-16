@@ -3,6 +3,7 @@
 */
 export class Activity {
  
+    public fitbitId: string; 
     public fitlinxxId: string;
     public image: string;     
     public name: string;    
@@ -10,6 +11,7 @@ export class Activity {
 
     public settings: string[];
 
+    private DEFAULT_FITBIT_ID = '2050'; // Weights
     private DEFAULT_IMAGE = 'blank.jpg';
 
     constructor() {      
@@ -25,6 +27,7 @@ export class Activity {
 
     static fromJson(json: any) : Activity {
         let activity = new Activity();
+        activity.fitbitId = json.fitbitId || activity.DEFAULT_FITBIT_ID;          
         activity.fitlinxxId = json.fitlinxxId;         
         activity.image = json.image || activity.DEFAULT_IMAGE;          
         activity.name = json.name;    

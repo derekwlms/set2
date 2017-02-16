@@ -9,6 +9,7 @@ export class Exercise {
  
     public activityName: string; 
     public done: boolean;  
+    public fitbitId: string;
     public fitlinxxId: string;
     public image: string;    
     public note: string;    
@@ -17,11 +18,13 @@ export class Exercise {
     public sets: ExerciseSet[];
     public settings: ExerciseSetting[];   // back, chest, front, legs, range, seat
 
-    private DEFAULT_SETTING = 3; 
-    private DEFAULT_IMAGE = 'blank.jpg';      
+    private DEFAULT_FITBIT_ID = '2050';   // Weights
+    private DEFAULT_IMAGE = 'blank.jpg'; 
+    private DEFAULT_SETTING = 3;          
 
     constructor() {
         this.activityName = ''; 
+        this.fitbitId = '';        
         this.fitlinxxId = '';       
         this.done = false;              
         this.note = '';     
@@ -54,6 +57,7 @@ export class Exercise {
     static fromActivity(activity: Activity) : Exercise {
         let exercise = new Exercise();
         exercise.activityName = activity.name || '';  
+        exercise.fitbitId = activity.fitbitId || exercise.DEFAULT_FITBIT_ID;         
         exercise.fitlinxxId = activity.fitlinxxId || ''; 
         exercise.image = activity.image || exercise.DEFAULT_IMAGE;      
         // exercise.type = activity.type;  
@@ -68,6 +72,7 @@ export class Exercise {
         let exercise = new Exercise();
         exercise.activityName = json.activityName || '';
         exercise.done = json.done;
+        exercise.fitbitId = json.fitbitId || '';        
         exercise.fitlinxxId = json.fitlinxxId || '';
         exercise.image = json.image || exercise.DEFAULT_IMAGE;
         exercise.note = json.note || '';

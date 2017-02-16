@@ -45,12 +45,20 @@
         </ion-list-header>   
         <ion-item>
           <ion-label>Client ID</ion-label>
-          <ion-input type="text" [(ngModel)]="settings.auth0clientId" name="auth0clientId"></ion-input>
+          <ion-input type="text" [(ngModel)]="settings.fitbitClientId" name="fitbitClientId"></ion-input>
         </ion-item>   
         <ion-item>
-          <ion-label>Domain</ion-label>
-          <ion-input type="text" [(ngModel)]="settings.auth0domain" name="auth0domain"></ion-input>
-        </ion-item>              
+          <ion-label>Client Secret</ion-label>
+          <ion-input type="text" [(ngModel)]="settings.fitbitClientSecret" name="fitbitClientSecret"></ion-input>
+        </ion-item>   
+        <ion-item>
+          <ion-label>Authorization Code</ion-label>
+          <ion-input type="text" [(ngModel)]="settings.fitbitAuthorizationCode" name="fitbitAuthorizationCode"></ion-input>
+        </ion-item>   
+        <ion-item>
+          <ion-label>Redirect URI</ion-label>
+          <ion-input type="text" [(ngModel)]="settings.fitbitRedirectUri" name="fitbitRedirectUri"></ion-input>
+        </ion-item>                          
       </ion-list>
 
       <ion-list>
@@ -69,7 +77,7 @@
 
     </form>
 
-    <hr />
+    <hr />    
 
     <button ion-button primary (click)="clearStorage()">Clear Storage</button>    
 
