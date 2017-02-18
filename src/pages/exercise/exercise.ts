@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { AlertController, NavController, NavParams } from 'ionic-angular';
 
 import { Exercise } from '../../models/exercise-model';
+import { Workout } from '../../models/workout-model';
 
 @Component({
   selector: 'page-exercise',
@@ -10,10 +11,29 @@ import { Exercise } from '../../models/exercise-model';
 export class ExercisePage {
 
   exercise: Exercise;
+  workout: Workout;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              public alertCtrl: AlertController) {
     this.exercise = navParams.get('exercise');
+    this.workout = navParams.get('workout');
   }  
+
+  deleteExercise(exercise) {
+    let confirm = this.alertCtrl.create({
+      title: 'Delete Exercise',
+      message: 'Remove ' + exercise.activityName + ' from this and future workouts?',
+      buttons: [ 
+        { text: 'No' }, 
+        { text: 'Yes',
+          handler: () => {
+            this.workout.removeExercise(exercise);            
+            this.navCtrl.pop(); 
+          } } ]
+    });
+    confirm.present();  
+  }
 
   markDone(exercise) {
     exercise.done = true;
@@ -27,7 +47,7 @@ export class ExercisePage {
   }
 
   addSetting(exercise: Exercise) {
-    exercise.addSettingValue('new', 70);
+    exercise.addSettingValue('Seat', 3);
   }
 
   addSet(exercise: Exercise) {

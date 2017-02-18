@@ -28,6 +28,22 @@ export class Workout {
         this.exercises.push(exercise);
     }
 
+    isInProgress() : boolean {
+        for (let exercise of this.exercises) {
+            if (exercise.done) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    removeExercise(exercise : Exercise) {
+        let idx = this.exercises.indexOf(exercise, 0);
+        if (idx > -1) {
+            this.exercises.splice(idx, 1)
+        }
+    }
+
     static fromJson(json: any) : Workout {
         let workout = new Workout();
         workout.done = json.done;

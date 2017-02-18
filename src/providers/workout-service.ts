@@ -26,7 +26,7 @@ export class WorkoutService {
     this.notebook = new Notebook();
   }
 
-  finishWorkout() {
+  finishWorkout() : void {
     let  workout = this.getCurrentWorkout();
     workout.done = true;
     workout.completedMsecs = this.getCurrentMillisecs();
@@ -50,6 +50,10 @@ export class WorkoutService {
     return this.notebook.settings;
   }
 
+  isWorkoutInProgress() : boolean {
+    return this.currentWorkout && this.currentWorkout.isInProgress();
+  }
+
   loadNotebook() : void {
     this.storage.get(this.NOTEBOOK_LOCAL_STORAGE_KEY).then((localStorageNotebook) => {
       let gotLocalStorageNotebook = false;
@@ -65,7 +69,7 @@ export class WorkoutService {
     });
   }  
 
-  removeLocalNotebook() {
+  removeLocalNotebook() : void {
     this.storage.set(this.NOTEBOOK_LOCAL_STORAGE_KEY, null);
   }
 

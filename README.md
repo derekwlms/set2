@@ -27,9 +27,7 @@ To enable console logging, comment out the *enableProdMode* call in main.ts.
 
 ## To Do
 
-- Settings page cleanup
 - Home page - history tab (list of workouts)
-- Delete Exercise
 - Activity default settings
 - Packaging, icons, artwork, empty notebook, build date (rollup.config.js)
 - Release builds, set2.paymenthorizons.com

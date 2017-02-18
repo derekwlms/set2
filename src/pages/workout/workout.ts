@@ -64,7 +64,8 @@ export class WorkoutPage {
 
   exerciseTapped(event, exercise) {
     this.navCtrl.push(ExercisePage, {
-      exercise: exercise
+      exercise: exercise,
+      workout: this.workout
     });
   }
 

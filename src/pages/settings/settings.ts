@@ -13,6 +13,8 @@ export class SettingsPage {
 
   public settings: Settings;
 
+  public selectedSettingsView: string = 'general';
+
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public workoutService: WorkoutService) {
