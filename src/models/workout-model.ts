@@ -33,6 +33,14 @@ export class Workout {
         this.completedMsecs = Workout.getCurrentMillisecs();
     }
 
+    getExerciseCount(checkDone : boolean): number {
+        let count = 0;
+        for (let exercise of this.exercises) {
+            count += exercise.done === checkDone ? 1 : 0;
+        } 
+        return count;
+    }
+
     isInProgress() : boolean {
         if (this.done) {
             return false;

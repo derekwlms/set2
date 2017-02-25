@@ -10,14 +10,27 @@
 <ion-content padding>
   <div class="home-centered">
     <h3>{{notebook.settings.name}}</h3>
-    <h3>Enjoy your Workout!</h3>  
+    <h3 *ngIf="completedExerciseCount === 0">Enjoy your Workout!</h3>  
+    <h3 *ngIf="completedExerciseCount !== 0 && !workoutIsFinished">Keep Working!</h3>  
+    <h3 *ngIf="workoutIsFinished">Nice Work!</h3>         
 
-    <p>This will be workout session # {{notebook.workouts.length + 1}}.</p>
-    <!--
-      <p *ngIf="lastWorkoutDate">Your last workout session was on {{lastWorkoutDate}}.</p>  
-    -->
+    <div *ngIf="completedExerciseCount === 0">
+      <p>This will be workout session # {{notebook.workouts.length + 1}}.</p>
+      <!-- <p *ngIf="lastWorkoutDate">Your last workout session was on {{lastWorkoutDate | date}}.</p>  -->
+    </div>
 
-    <button ion-button primary (click)="startWorkout()">Start Workout</button>
+    <div *ngIf="completedExerciseCount !== 0 && !workoutIsFinished">  
+      <p>You have completed {{completedExerciseCount}} exercises and have {{pendingExerciseCount}} remaining.</p>       
+    </div>  
+
+    <div *ngIf="workoutIsFinished">  
+      <p>You completed {{completedExerciseCount}} exercises.  Do you want to start another workout?</p>       
+    </div>      
+      
+    <div *ngIf="completedExerciseCount !== 0 && !workoutIsFinished">
+      <button ion-button class="resume-button" primary (click)="resumeWorkout()">Resume Workout</button>
+    </div>
+    <button ion-button primary (click)="startWorkout()">Start New Workout</button>
   </div>
 
 </ion-content>

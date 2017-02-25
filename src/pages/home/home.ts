@@ -7,6 +7,7 @@ import { WorkoutService } from '../../providers/workout-service';
 import { WorkoutPage } from '../workout/workout';
 
 import { Notebook } from '../../models/notebook-model';
+import { Workout } from '../../models/workout-model';
 
 @Component({
   selector: 'page-home',
@@ -14,7 +15,12 @@ import { Notebook } from '../../models/notebook-model';
 })
 export class HomePage {
   
+  completedExerciseCount = 0;
   lastWorkoutDate: Date;
+  pendingExerciseCount = 0;
+  workoutIsFinished = false;
+
+
   notebook: Notebook;
 
   constructor(public navCtrl: NavController,
@@ -23,10 +29,20 @@ export class HomePage {
     this.notebook = this.workoutService.getNotebook();
   }
 
-  ionViewDidLoad() {
-    if (this.notebook.lastUpdated && this.notebook.lastUpdated > 1) {
-      this.lastWorkoutDate = new Date(this.notebook.lastUpdated);
+  ionViewWillEnter() {
+    let currentWorkout: Workout = this.workoutService.currentWorkout;
+    if (currentWorkout) {
+      this.workoutIsFinished = currentWorkout.done;
+      this.completedExerciseCount = currentWorkout.getExerciseCount(true);
+      this.pendingExerciseCount = currentWorkout.getExerciseCount(false);
+      if (this.notebook.lastUpdated && this.notebook.lastUpdated > 1) {
+        this.lastWorkoutDate = new Date(this.notebook.lastUpdated);
+      }      
     }
+  }
+
+  resumeWorkout() : void {
+    this.navCtrl.setRoot(WorkoutPage);
   }  
 
   startWorkout() : void {
