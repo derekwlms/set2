@@ -37,7 +37,7 @@
                         "fitbitId": "2050", "fitlinxxId": "10787", "settings": [ { "name": "Back", "value": 3 }, { "name": "Seat", "value": 2 } ] }, 
                     { "activityName": "Wide Grip / Lat Pulldown", "image": "lat-pulldown.png", 
                         "sets": [ { "weight": 110, "reps": 12 }, { "weight": 120, "reps": 12 } ],  
-                        "fitbitId": "2050", "fitlinxxId": "10791", "settings": [] },                         
+                        "fitbitId": "2050", "fitlinxxId": "10791", "settings": [ { "name": "Seat", "value": 3 } ] },                         
                     { "activityName": "Abdominal (Ab) Crunch", "image": "abdominal.jpg", 
                         "sets": [ { "weight": 95, "reps": 12 }, { "weight": 100, "reps": 12 } ],                    
                         "fitbitId": "2050", "fitlinxxId": "", "settings": [] },        
@@ -46,10 +46,10 @@
                         "fitbitId": "2050", "fitlinxxId": "", "settings": [] },          
                     { "activityName": "Seated Row", "image": "seated-row.jpg", 
                         "sets": [ { "weight": 100, "reps": 12 }, { "weight": 110, "reps": 12 } ],
-                        "fitbitId": "2050", "fitlinxxId": "10794", "settings": [] },      
+                        "fitbitId": "2050", "fitlinxxId": "10794", "settings": [ { "name": "Chest", "value": 3 }, { "name": "Seat", "value": 3 } ] },      
                     { "activityName": "Leg Press", "image": "leg-press.jpg", 
-                        "sets": [ { "weight": 330, "reps": 12 }, { "weight": 350, "reps": 12 } ],
-                        "fitbitId": "2050", "fitlinxxId": "10814", "settings": [] },
+                        "sets": [ { "weight": 330, "reps": 12 }, { "weight": 350, "reps": 12 }, "settings" ],
+                        "fitbitId": "2050", "fitlinxxId": "10814", "settings": [ { "name": "Seat", "value": 3 }, { "name": "Legs", "value": 5 } ] },
                     { "activityName": "Leg Extension", "image": "leg-extension.jpg", 
                         "sets": [ { "weight": 130, "reps": 12 }, { "weight": 140, "reps": 12 } ],
                         "fitbitId": "2050", "fitlinxxId": "10811", "settings": [] },
@@ -58,10 +58,10 @@
                         "fitbitId": "2050", "fitlinxxId": "10815", "settings": [] },
                     { "activityName": "Hip Abduction", "image": "hip-ab-adj.jpg", 
                         "sets": [ { "weight": 150, "reps": 12 }, { "weight": 155, "reps": 12 } ],
-                        "fitbitId": "2050", "fitlinxxId": "", "settings": [] },
+                        "fitbitId": "2050", "fitlinxxId": "", "settings": [ { "name": "Seat", "value": 3 }, { "name": "Legs", "value": 5 } ] },
                     { "activityName": "Hip Adduction", "image": "hip-ab-adj.jpg", 
                         "sets": [ { "weight": 150, "reps": 12 }, { "weight": 155, "reps": 12 } ],
-                        "fitbitId": "2050", "fitlinxxId": "", "settings": [] } ]
+                        "fitbitId": "2050", "fitlinxxId": "", "settings": [ { "name": "Seat", "value": 3 }, { "name": "Legs", "value": 5 } ] } ]
             }  
         ]
     }

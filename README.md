@@ -23,12 +23,11 @@ Recommended `ionic info`:
 - Ionic CLI Version: 2.1.17
 - Ionic App Lib Version: 2.1.7
 
-To enable console logging, comment out the *enableProdMode* call in main.ts.  
+To enable console logging, comment out the production setup in main.ts.  
 
 ## To Do
 
 - Home page - history tab (list of workouts)
-- Activity default settings
 - Packaging, icons, artwork, empty notebook, build date (rollup.config.js)
 - Release builds, set2.paymenthorizons.com
 - Wiki dev doc

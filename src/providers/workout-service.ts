@@ -28,8 +28,7 @@ export class WorkoutService {
 
   finishWorkout() : void {
     let  workout = this.getCurrentWorkout();
-    workout.done = true;
-    workout.completedMsecs = this.getCurrentMillisecs();
+    workout.finishWorkout();
     this.notebook.addWorkout(workout);
     this.saveNotebook();
     this.workoutUploadService.uploadWorkout(this.notebook, workout);
@@ -76,7 +75,7 @@ export class WorkoutService {
   startNewWorkout() : void {
     let nb = this.getNotebook();
     let workoutToCopy = nb && nb.workouts[0] ? nb.workouts[nb.workouts.length - 1] : new Workout();
-    this.currentWorkout = Workout.fromJson(workoutToCopy);
+    this.currentWorkout = Workout.createNewWorkout(workoutToCopy);
     this.currentWorkout.startedMsecs = this.getCurrentMillisecs();
     for (let exercise of this.currentWorkout.exercises) {
         exercise.done = false;

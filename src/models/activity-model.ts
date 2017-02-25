@@ -1,3 +1,5 @@
+import { ActivitySetting } from './activity-setting-model';
+
 /*
   Activity model object - Something (weights, cardio, etc.) you can do for an exercise.
 */
@@ -9,7 +11,7 @@ export class Activity {
     public name: string;    
     public type: string;
 
-    public settings: string[];
+    public settings: Array<ActivitySetting>;
 
     private DEFAULT_FITBIT_ID = '2050'; // Weights
     private DEFAULT_IMAGE = 'blank.jpg';
@@ -18,10 +20,10 @@ export class Activity {
         this.name = '';      
         this.type = 'strength';
 
-       this.settings = new Array<string>();        
+       this.settings = new Array<ActivitySetting>();        
     }
 
-    addSetting(setting : string) {
+    addSetting(setting : ActivitySetting) {
         this.settings.push(setting);
     }    
 
@@ -32,7 +34,7 @@ export class Activity {
         activity.image = json.image || activity.DEFAULT_IMAGE;          
         activity.name = json.name;    
         activity.type = json.type;  
-        activity.settings = json.settings;           
+        activity.settings = ActivitySetting.fromJsonArray(json.settings);           
         return activity;
     }     
 

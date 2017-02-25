@@ -28,7 +28,15 @@ export class Workout {
         this.exercises.push(exercise);
     }
 
+    finishWorkout(): void {
+        this.done = true;
+        this.completedMsecs = Workout.getCurrentMillisecs();
+    }
+
     isInProgress() : boolean {
+        if (this.done) {
+            return false;
+        }
         for (let exercise of this.exercises) {
             if (exercise.done) {
                 return true;
@@ -42,6 +50,18 @@ export class Workout {
         if (idx > -1) {
             this.exercises.splice(idx, 1)
         }
+    }
+
+    static createNewWorkout(workoutToCopy: Workout) : Workout {
+        let newWorkout : Workout = Workout.fromJson(workoutToCopy);
+        newWorkout.completedMsecs = null;
+        newWorkout.done = false;
+        newWorkout.startedMsecs = this.getCurrentMillisecs();
+        for (let exercise of newWorkout.exercises) {
+            exercise.done = false;
+            exercise.skipped = false;
+        } 
+        return newWorkout;
     }
 
     static fromJson(json: any) : Workout {
@@ -59,6 +79,10 @@ export class Workout {
             workout.addExercise(Exercise.fromJson(exercise));
         }
         return workout;
-    }    
+    }      
+
+    private static getCurrentMillisecs(): number {
+        return new Date().getTime();
+    }      
     
 }

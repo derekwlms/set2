@@ -1,6 +1,6 @@
 import { Activity } from './activity-model';
+import { ActivitySetting } from './activity-setting-model';
 import { ExerciseSet } from './exercise-set-model';
-import { ExerciseSetting } from './exercise-setting-model';
 
 /*
   Exercise model object - Records an instance of an exercise activity within a Workout.
@@ -16,11 +16,10 @@ export class Exercise {
     public skipped: boolean;
 
     public sets: ExerciseSet[];
-    public settings: ExerciseSetting[];   // back, chest, front, legs, range, seat
+    public settings: ActivitySetting[];   // back, chest, front, legs, range, seat
 
     private DEFAULT_FITBIT_ID = '2050';   // Weights
-    private DEFAULT_IMAGE = 'blank.jpg'; 
-    private DEFAULT_SETTING = 3;          
+    private DEFAULT_IMAGE = 'blank.jpg';         
 
     constructor() {
         this.activityName = ''; 
@@ -31,7 +30,7 @@ export class Exercise {
         this.skipped = false;   
 
         this.sets = new Array<ExerciseSet>();  
-        this.settings = new Array<ExerciseSetting>();               
+        this.settings = new Array<ActivitySetting>();               
     }
 
     addSet(set: ExerciseSet) {
@@ -46,12 +45,12 @@ export class Exercise {
         return this.sets[index] ? this.sets[index] :  ExerciseSet.strengthSet(0, 0);
     }
 
-    addSetting(setting: ExerciseSetting) {
+    addSetting(setting: ActivitySetting) {
         this.settings.push(setting);
     }   
 
     addSettingValue(name: string, value: number) {
-        this.addSetting(new ExerciseSetting(name, value));
+        this.addSetting(new ActivitySetting(name, value));
     }
 
     static fromActivity(activity: Activity) : Exercise {
@@ -61,9 +60,8 @@ export class Exercise {
         exercise.fitlinxxId = activity.fitlinxxId || ''; 
         exercise.image = activity.image || exercise.DEFAULT_IMAGE;      
         // exercise.type = activity.type;  
-        // TODO Add default setting to Activity    
-        for (let settingName of activity.settings) {
-            exercise.addSettingValue(settingName, exercise.DEFAULT_SETTING);
+        for (let setting of activity.settings) {
+            exercise.addSetting(setting);
         }
         return exercise;
     }  
@@ -81,7 +79,7 @@ export class Exercise {
             exercise.addSet(ExerciseSet.fromJson(set));
         }
         for (let setting of json.settings) {
-            exercise.addSetting(ExerciseSetting.fromJson(setting));
+            exercise.addSetting(ActivitySetting.fromJson(setting));
         }        
         return exercise;
     }      
