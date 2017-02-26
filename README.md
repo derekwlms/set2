@@ -27,7 +27,8 @@ To enable console logging, comment out the production setup in main.ts.
 
 ## To Do
 
-- Home page - history tab (list of workouts)
+- History page (list of workouts)
+- Fitbit refresh token
 - Packaging, icons, artwork, empty notebook, build date (rollup.config.js)
 - Release builds, set2.paymenthorizons.com
 - Wiki dev doc

@@ -66,7 +66,9 @@
         <ion-item>
           <ion-label>Redirect URI</ion-label>
           <ion-input type="text" [(ngModel)]="settings.fitbitRedirectUri" name="fitbitRedirectUri"></ion-input>
-        </ion-item>         
+        </ion-item>       
+        <div padding></div>          
+        <button ion-button primary (click)="fitbitLogin()">Login</button>        
       </div>      
 
       <div *ngSwitchCase="'email'">

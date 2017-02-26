@@ -9,7 +9,7 @@
             "fitbitAuthorizationCode": "",     
             "fitbitClientId": "",              
             "fitbitClientSecret": "",    
-            "fitbitRedirectUri": "",                                     
+            "fitbitRedirectUri": "http://localhost/callback",                                     
             "fitLinxxUserId": "DerekWilliams",
             "fitLinxxPassword": "",
             "name": "Derek Williams"         

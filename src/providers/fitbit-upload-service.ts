@@ -15,16 +15,7 @@ import { UploadLoggingService } from './upload-logging-service';
  *      https://www.fitbit.com/user/profile/apps
  *      https://dev.fitbit.com/apps/ 
  *      https://www.fitbit.com/oauth2/authorize   (authZ)
- *      https://api.fitbit.com/oauth2/token       (token request/refresh) 
- * 
- * Currently authorizing outside this app, but may add it here using Auth0:
- *      https://auth0.com/docs/connections/social/fitbit
- *      https://manage.auth0.com/
- * Auth0's client uses a buncha stuff:
- *      https://www.npmjs.com/package/auth0-lock
- *      https://www.npmjs.com/package/auth0-js
- *      https://github.com/auth0/angular2-jwt 
- *      
+ *      https://api.fitbit.com/oauth2/token       (token request/refresh)     
 */
 @Injectable()
 export class FitbitUploadService {
@@ -36,18 +27,46 @@ export class FitbitUploadService {
   constructor(public http: Http,
               public uploadLoggingService: UploadLoggingService) { }
 
+  login(window: any, settings: Settings) : Promise<any> {
+    let self = this;    
+    self.logMessage('Opening browser for Fitbit login', null);
+    return new Promise(function(resolve, reject) {
+      var inAppBrowser = window.cordova.InAppBrowser
+        .open(self.FITBIT_AUTHORIZE_URL + 
+                  '?response_type=code' +
+                  '&client_id=' + settings.fitbitClientId +
+                  '&redirect_uri=' + settings.fitbitRedirectUri +
+                  '&scope=activity');
+      inAppBrowser.addEventListener('loadstart', (event) => {
+        self.logMessage('Fitbit login - loadstart', event.url);
+        if (event.url.indexOf(settings.fitbitRedirectUri) === 0) {
+          inAppBrowser.removeEventListener('exit', (event) => {});
+          inAppBrowser.close();
+          let urlSplit = event.url.split(/code=/);
+          let authorizationCode = (urlSplit[1] || '').split(/#/)[0];          
+          if (authorizationCode) {
+            resolve(authorizationCode);
+          } else {
+            reject(self.logMessage('Unable to authenticate with Fitbit', null));
+          }
+        }
+      });
+      inAppBrowser.addEventListener('exit', function(event) {
+          reject(self.logMessage('Fitbit sign in was cancelled', null));
+      });
+    });
+  }
+
   uploadWorkout(settings: Settings, workout: Workout) : void {
 
     if (!settings.fitbitClientId || !settings.fitbitClientSecret || !settings.fitbitRedirectUri) {
       this.logMessage('To enable Fitbit uploads, configure Fitbit parameters in Settings.', null);
       return;
     }
-    /*
-    if (!auth.authenticated()) {
+    if (!settings.fitbitAuthorizationCode) {
       this.logMessage('To enable Fitbit uploads, go to Settings and log in.', null);
       return;
     }  
-    */
     // TODO Maybe convert to promise chain or observable stream    
     let self = this;
     this.getAccessToken(settings, function(accessToken) { 
@@ -67,7 +86,9 @@ export class FitbitUploadService {
       body.set('client_id', settings.fitbitClientId);
       body.set('grant_type', 'authorization_code'); 
       body.set('redirect_uri', settings.fitbitRedirectUri);         
-      body.set('code', authorizationCode);                              
+      body.set('code', authorizationCode);   
+      // self.logMessage('Getting authorization code - encoded auth', encodedAuth);        
+      // self.logMessage('Getting authorization code - body', body.toString());                           
       self.http.post(self.FITBIT_TOKEN_URL, body.toString(), { headers: headers })
         .map(res => res.json())
         .subscribe(data => {
@@ -108,6 +129,7 @@ export class FitbitUploadService {
 
   private logMessage(message: string, arg: any) {
     this.uploadLoggingService.logMessage('fitbit', message, arg);
+    return message;
   }
 
   private sendWorkout(accessToken: string, workout: Workout) {
