@@ -5,8 +5,7 @@
         "settings": {
             "emailAddress": "derekwlms@gmail.com",
             "emailApiKey": "",
-            "emailDomain:": "paymenthorizons.com", 
-            "fitbitAuthorizationCode": "",     
+            "emailDomain:": "paymenthorizons.com",  
             "fitbitClientId": "",              
             "fitbitClientSecret": "",    
             "fitbitRedirectUri": "http://localhost/callback",                                     

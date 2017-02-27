@@ -39,7 +39,6 @@ export class SettingsPage {
     let self = this;
     this.platform.ready().then(() => {
       this.fitbitUploadService.login(window, this.settings).then(authCode => {
-        self.settings.fitbitAuthorizationCode = authCode;
         self.showAlert('Fitbit login complete', 'Received authorization code: ' + authCode);
       }, (error) => {
         self.showAlert('Fitbit login error', error);

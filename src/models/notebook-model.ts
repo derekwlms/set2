@@ -35,7 +35,7 @@ export class Notebook {
         if (notebook.lastUpdated && notebook.lastUpdated > this.lastUpdated) {
             this.id = notebook.id;
             this.lastUpdated = notebook.lastUpdated; // parseInt('' + notebook.lastUpdated);   
-            this.settings = notebook.settings;
+            this.settings = Settings.fromJson(notebook.settings);
             this.workouts = notebook.workouts;
             return true;
         } else {

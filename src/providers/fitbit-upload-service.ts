@@ -7,6 +7,8 @@ import { Workout } from '../models/workout-model';
 
 import { UploadLoggingService } from './upload-logging-service';
 
+declare var window: any;
+
 /*
  * FitbitUploadService provider - uploads a completed workout to Fitbit. 
  * Uses https://dev.fitbit.com/docs/activity/#log-activity.
@@ -27,6 +29,22 @@ export class FitbitUploadService {
   constructor(public http: Http,
               public uploadLoggingService: UploadLoggingService) { }
 
+  uploadWorkout(settings: Settings, workout: Workout) : void {
+    if (!settings.fitbitClientId || !settings.fitbitClientSecret || !settings.fitbitRedirectUri) {
+      this.logMessage('To enable Fitbit uploads, configure Fitbit parameters in Settings.', null);
+      return;
+    }
+    let self = this;
+    this
+      .getCurrentAccessToken(settings)
+      .then(accessToken => { 
+        self.sendWorkout(accessToken, workout);
+      })
+      .catch(err => {
+        self.logMessage('Error accessing Fitbit', err); 
+      });
+  }
+
   login(window: any, settings: Settings) : Promise<any> {
     let self = this;    
     self.logMessage('Opening browser for Fitbit login', null);
@@ -45,6 +63,7 @@ export class FitbitUploadService {
           let urlSplit = event.url.split(/code=/);
           let authorizationCode = (urlSplit[1] || '').split(/#/)[0];          
           if (authorizationCode) {
+            settings.fitbitAuthorization.setAuthorizationCode(authorizationCode);            
             resolve(authorizationCode);
           } else {
             reject(self.logMessage('Unable to authenticate with Fitbit', null));
@@ -57,26 +76,45 @@ export class FitbitUploadService {
     });
   }
 
-  uploadWorkout(settings: Settings, workout: Workout) : void {
-
-    if (!settings.fitbitClientId || !settings.fitbitClientSecret || !settings.fitbitRedirectUri) {
-      this.logMessage('To enable Fitbit uploads, configure Fitbit parameters in Settings.', null);
-      return;
+  private getCurrentAccessToken(settings: Settings) : Promise<any> {  
+    if (settings.fitbitAuthorization.hasValidAccessToken()) {
+      return new Promise(function(resolve) {
+        resolve(settings.fitbitAuthorization.accessToken)});
     }
-    if (!settings.fitbitAuthorizationCode) {
-      this.logMessage('To enable Fitbit uploads, go to Settings and log in.', null);
-      return;
-    }  
-    // TODO Maybe convert to promise chain or observable stream    
+    if (settings.fitbitAuthorization.refreshToken) {
+      return this.refreshAccessToken(settings);
+    }
+    if (settings.fitbitAuthorization.hasValidAuthorizationCode()) {
+      return this.getAccessToken(settings, settings.fitbitAuthorization.authorizationCode);            
+    }
     let self = this;
-    this.getAccessToken(settings, function(accessToken) { 
-      self.sendWorkout(accessToken, workout); 
-    });       
-  }
+    return new Promise(function(resolve, reject) {
+      self.getAuthorizationCode(settings)
+        .then(authCode => { 
+          self
+            .getAccessToken(settings, authCode)
+            .then(accessToken => { resolve(accessToken); })
+        })
+        .catch(err => {
+          if (!window || !window.cordova || !window.cordova.InAppBrowser) {
+            reject('No InAppBrowser available for  Fitbit login');
+            return;
+          }
+          self
+            .login(window, settings)
+            .then(authCode => {
+              self
+                .getAccessToken(settings, authCode)
+                .then(accessToken =>  { resolve(accessToken); })
+            })
+        });  
+    }); 
+  };  
 
-  private getAccessToken(settings: Settings, nextStep: Function) : void {  
+  private getAccessToken(settings: Settings, authorizationCode: string) : Promise<any> {  
     let self = this;  
-    this.checkAuthorizationCode(settings, function(authorizationCode) {
+    return new Promise(function(resolve, reject) {
+
       let headers = new Headers();
       let encodedAuth = btoa(settings.fitbitClientId + ':' + settings.fitbitClientSecret);
       headers.append('Authorization', 'Basic ' + encodedAuth);        
@@ -92,39 +130,63 @@ export class FitbitUploadService {
       self.http.post(self.FITBIT_TOKEN_URL, body.toString(), { headers: headers })
         .map(res => res.json())
         .subscribe(data => {
-          self.logMessage('Fitbit token response: ', data.access_token);           
-          nextStep(data.access_token);              
+          self.logMessage('Fitbit token response: ', data);   
+          settings.fitbitAuthorization.applyAuthTokenResponse(data);
+          resolve(data.access_token);              
         }, err => {
-          self.logMessage('Error getting Fitbit auth token', err);
+          reject(self.logMessage('Error getting Fitbit auth token', err));
         });      
-    }); 
-  };  
 
-  private checkAuthorizationCode(settings: Settings, nextStep: Function) : void {  
-    if (settings.fitbitAuthorizationCode) {
-      nextStep(settings.fitbitAuthorizationCode);
-    } else {
-      this.getAuthorizationCode(settings, nextStep);
-    }
+    });
+  };   
+
+  private getAuthorizationCode(settings: Settings) : Promise<any> {
+    let self = this;
+    return new Promise(function(resolve, reject) {    
+      let params = new URLSearchParams();
+      params.set('response_type', 'code');
+      params.set('client_id', settings.fitbitClientId);    
+      params.set('redirect_uri', settings.fitbitRedirectUri);    
+      params.set('scope', 'activity');       
+      self.http.get(self.FITBIT_AUTHORIZE_URL, { search: params })   
+        .subscribe(res => {
+          self.logMessage('Fitbit authorization code response', res);
+          // Get authorizationCode ("code") from the redirect URL (response header location): 
+          let location = res.headers.get('location') || '';
+          let locationSplit = location.split(/code=/);
+          let authorizationCode = locationSplit[1];   
+          if (authorizationCode && authorizationCode.length > 3) {
+            resolve(authorizationCode);
+          } else {
+            reject('Cannot get authorization code via API, will likely have to log in');
+          }
+        }, err => {
+          reject(self.logMessage('Error getting Fitbit authorization code', err));
+        });  
+    });     
   }
 
-  private getAuthorizationCode(settings: Settings, nextStep: Function) {
-    let params = new URLSearchParams();
-    params.set('response_type', 'code');
-    params.set('client_id', settings.fitbitClientId);    
-    params.set('redirect_uri', settings.fitbitRedirectUri);    
-    params.set('scope', 'activity');       
-    this.http.get(this.FITBIT_AUTHORIZE_URL, { search: params })   
-      .subscribe(res => {
-        this.logMessage('Fitbit authorization code response', res);
-        // Get authorizationCode ("code") from the redirect URL (response header location): 
-        let location = res.headers.get('location');
-        let locationSplit = location.split(/code=/);
-        let authorizationCode = locationSplit[1];        
-        nextStep(authorizationCode);
-      }, err => {
-        this.logMessage('Error getting Fitbit authorization code', err);
-      });       
+  private refreshAccessToken(settings: Settings) : Promise<any> {
+    let self = this;
+    return new Promise(function(resolve, reject) {  
+      let headers = new Headers();
+      let encodedAuth = btoa(settings.fitbitClientId + ':' + settings.fitbitClientSecret);
+      headers.append('Authorization', 'Basic ' + encodedAuth);        
+      headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+      let body = new URLSearchParams();
+      body.set('grant_type', 'refresh_token'); 
+      body.set('refresh_token', settings.fitbitAuthorization.refreshToken);                       
+      self.http.post(self.FITBIT_TOKEN_URL, body.toString(), { headers: headers })
+        .map(res => res.json())
+        .subscribe(data => {
+          self.logMessage('Fitbit refresh token response: ', data);   
+          settings.fitbitAuthorization.applyAuthTokenResponse(data);
+          resolve(data.access_token);              
+        }, err => {
+          reject(self.logMessage('Error refreshing Fitbit auth token', err));
+        }); 
+    });      
   }
 
   private logMessage(message: string, arg: any) {
