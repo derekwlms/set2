@@ -1,7 +1,8 @@
 # Set 2 - Exercise Tracking App
 
-Set 2 is a simple exercise tracking app for Ionic 2.  
-It fills a gap created when [FitLinxx](https://fitlinxx.com) trackers were discontinued in Metro Atlanta YMCAs.
+![Set 2](http://set2.paymenthorizons.com/set2-med.png)
+
+Set 2 is a simple exercise tracking app for Ionic 2.  It fills a gap created when [FitLinxx](https://fitlinxx.com) trackers were discontinued in Metro Atlanta YMCAs.
 
 This app guides you through your workout circuit, lets you quickly record exercises, and uploads your results. It can send results to Fitbit and FitLinxx, and email them to you.
 
@@ -27,13 +28,12 @@ To enable console logging, comment out the production setup in main.ts.
 
 ## To Do
 
+- Fitbit log weight time of day
 - History page (list of workouts)
-- Packaging, icons, artwork, empty notebook, build date (rollup.config.js)
-- Release builds, set2.paymenthorizons.com
+- Packaging, Release builds, set2.paymenthorizons.com
 - Wiki dev doc
 - Other activity types & their settings - cardio, etc
-- Online save?  Firebase?
-- Import - Fitlinx scrape?  jsonschema?
+- Online save and import?  Firebase?  jsonschema?
 
 ## Documentation
 
