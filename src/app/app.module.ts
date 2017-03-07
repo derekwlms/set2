@@ -15,6 +15,7 @@ import { WorkoutUploadService } from '../providers/workout-upload-service';
 import { AboutPage } from '../pages/about/about';
 import { AddExercisePage } from '../pages/add-exercise/add-exercise';
 import { ExercisePage } from '../pages/exercise/exercise';
+import { HistoryPage } from '../pages/history/history';
 import { HomePage } from '../pages/home/home';
 import { SettingsPage } from '../pages/settings/settings';
 import { UploadPage } from '../pages/upload/upload';
@@ -25,6 +26,7 @@ import { WorkoutPage } from '../pages/workout/workout';
     AboutPage,
     AddExercisePage,
     ExercisePage,
+    HistoryPage,
     HomePage,    
     MyApp,
     SettingsPage,
@@ -38,7 +40,8 @@ import { WorkoutPage } from '../pages/workout/workout';
   entryComponents: [
     AboutPage,
     AddExercisePage,    
-    ExercisePage,    
+    ExercisePage, 
+    HistoryPage,   
     HomePage,
     MyApp,    
     SettingsPage,

@@ -198,7 +198,8 @@ export class FitbitUploadService {
     let exerciseGroups = ExerciseGroup.groupCompletedExercises(workout.exercises, 'fitbitId');
     for (let groupId in exerciseGroups) {
       this.sendExerciseGroup(accessToken, exerciseGroups[groupId]);
-    }     
+    }   
+    workout.fitBitUploadMsecs = new Date().getTime();      
   }
 
   private sendExerciseGroup(accessToken: string, exerciseGroup: ExerciseGroup) : void {

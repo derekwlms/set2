@@ -36,7 +36,8 @@ export class FitLinxxUploadService {
           self.addExerciseParameters(body, exercise);
         }
       }
-      self.sendWorkout(body);      
+      self.sendWorkout(body);   
+      workout.fitLinxxUploadMsecs = new Date().getTime();         
     });
   }
 

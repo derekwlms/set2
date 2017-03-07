@@ -41,6 +41,7 @@ export class EmailSendService {
     this.http.request(new Request(requestParms))
     .subscribe(success => {
         this.logMessage('Email sent.', null); // JSON.stringify(success));
+        workout.emailUploadMsecs = new Date().getTime();
     }, error => {
         this.logMessage('Email send error', JSON.stringify(error));
         // this.logMessage('Email send error details', JSON.stringify(error.json()));              

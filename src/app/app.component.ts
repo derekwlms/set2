@@ -3,6 +3,7 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { AboutPage } from '../pages/about/about';
+import { HistoryPage } from '../pages/history/history';
 import { HomePage } from '../pages/home/home';
 import { SettingsPage } from '../pages/settings/settings';
 import { UploadPage } from '../pages/upload/upload';
@@ -36,7 +37,8 @@ export class MyApp {
 
     this.workoutPages = [
       { title: 'Home', icon: 'home', component: HomePage},
-      { title: 'Workout', icon: 'body', component: WorkoutPage }              
+      { title: 'Workout', icon: 'body', component: WorkoutPage },
+      { title: 'History', icon: 'folder', component: HistoryPage }             
     ];
 
     this.adminPages = [

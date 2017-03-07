@@ -1,0 +1,25 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle start>
+      <ion-icon name="menu"></ion-icon>
+    </button>    
+    <ion-title>History</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item text-wrap *ngFor="let workoutSummary of workoutSummaries">    
+      <h2>{{workoutSummary.completedDate | date:'EEEE, MMMM d, y, h:mm a'}}</h2>
+      <h2 item-right>{{workoutSummary.completedExerciseCount}} exercises</h2>
+      <p>{{workoutSummary.elapsedMinutes}} minutes</p>
+      <!--
+      <p *ngIf="workoutSummary.uploads">Uploaded to: {{workoutSummary.uploads}}</p>
+      -->
+    </ion-item>
+  </ion-list>  
+
+</ion-content>

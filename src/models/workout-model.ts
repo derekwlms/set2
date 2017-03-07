@@ -10,6 +10,7 @@ export class Workout {
     public title: string;
 
     public completedMsecs: number;
+    public emailUploadMsecs: number;    
     public fitBitUploadMsecs: number;
     public fitLinxxUploadMsecs: number;
     public startedMsecs: number;
@@ -79,6 +80,7 @@ export class Workout {
         workout.title = json.title || '';
 
         workout.completedMsecs = json.completedMsecs;
+        workout.emailUploadMsecs = json.emailUploadMsecs;        
         workout.fitBitUploadMsecs = json.fitBitUploadMsecs;
         workout.fitLinxxUploadMsecs = json.fitLinxxUploadMsecs;
         workout.startedMsecs = json.startedMsecs;

@@ -29,7 +29,6 @@ To enable console logging, comment out the production setup in main.ts.
 ## To Do
 
 - Fitbit log weight time of day
-- History page (list of workouts)
 - Packaging, Release builds, set2.paymenthorizons.com
 - Wiki dev doc
 - Other activity types & their settings - cardio, etc
