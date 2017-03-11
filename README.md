@@ -26,14 +26,6 @@ Recommended `ionic info`:
 
 To enable console logging, comment out the production setup in main.ts.  
 
-## To Do
-
-- Fitbit log weight time of day
-- Packaging, Release builds, set2.paymenthorizons.com
-- Wiki dev doc
-- Other activity types & their settings - cardio, etc
-- Online save and import?  Firebase?  jsonschema?
-
 ## Documentation
 
 See the [wiki](https://github.com/derekwlms/set2/wiki).

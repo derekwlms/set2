@@ -7,6 +7,8 @@ import { Workout } from '../models/workout-model';
 
 import { UploadLoggingService } from './upload-logging-service';
 
+import moment from 'moment';
+
 declare var window: any;
 
 /*
@@ -208,10 +210,9 @@ export class FitbitUploadService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');        
     let body = new URLSearchParams();    
     body.set('activityId', exerciseGroup.groupId);
-    // Smaller than moment.js:
-    let dateArray = (exerciseGroup.startDate || new Date()).toISOString().split('T');
-    body.set('date', '' + dateArray[0]);
-    body.set('startTime', '' + dateArray[1].split('.')[0]);    
+    let m = moment(exerciseGroup.startDate || new Date());
+    body.set('date', m.format('YYYY-MM-DD'));
+    body.set('startTime', m.format('hh:mm:ss'));    
     body.set('durationMillis', '' + exerciseGroup.durationMillisecs);
     this.http.post(this.FITBIT_LOG_ACTIVITY_URL, body.toString(), { headers: headers })
       .subscribe(exerciseResponse => {
